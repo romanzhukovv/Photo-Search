@@ -7,16 +7,15 @@
 
 import UIKit
 import Kingfisher
-import RealmSwift
 
 class FavoriteListViewController: UITableViewController {
-    var favoritePhotos: Results<Photo>!
 
+    var viewModel: FavoriteListViewModelProtocol!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(FavoritePhotoViewCell.self, forCellReuseIdentifier: FavoritePhotoViewCell.reuseId)
         tableView.backgroundColor = .white
-        favoritePhotos = StorageManager.shared.realm.objects(Photo.self)
         tableView.rowHeight = 140
     }
 
@@ -28,21 +27,19 @@ class FavoriteListViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        favoritePhotos.count
+        viewModel.numberOfRows()
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: FavoritePhotoViewCell.reuseId, for: indexPath) as! FavoritePhotoViewCell
-        let photo = favoritePhotos[indexPath.row]
-
-        cell.configureCell(photo: photo)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: FavoritePhotoViewCell.reuseId, for: indexPath) as? FavoritePhotoViewCell else { return UITableViewCell() }
+        cell.viewModel = viewModel.cellViewModel(at: indexPath)
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let photo = favoritePhotos[indexPath.row]
-        let detailVC = PhotoDetailViewController(photo: photo)
-        detailVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(detailVC, animated: true)
+//        let photo = favoritePhotos[indexPath.row]
+//        let detailVC = PhotoDetailViewController(photo: photo)
+//        detailVC.hidesBottomBarWhenPushed = true
+//        navigationController?.pushViewController(detailVC, animated: true)
     }
 }

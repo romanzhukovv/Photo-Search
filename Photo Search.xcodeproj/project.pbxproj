@@ -15,11 +15,13 @@
 		FC100A7F29636B7A0016304A /* PSRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC100A7E29636B7A0016304A /* PSRouter.swift */; };
 		FC100A8129637CC60016304A /* PhotoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC100A8029637CC60016304A /* PhotoDetailView.swift */; };
 		FC100A84296385AB0016304A /* PhotoDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC100A83296385AB0016304A /* PhotoDetailViewModel.swift */; };
+		FC100A8929639A1E0016304A /* FavoriteListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC100A8829639A1E0016304A /* FavoriteListViewModel.swift */; };
+		FC100A8B29639A540016304A /* FavoriteCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC100A8A29639A540016304A /* FavoriteCellViewModel.swift */; };
 		FC9F402829633A6F000E998C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9F402729633A6F000E998C /* AppDelegate.swift */; };
 		FC9F402A29633A6F000E998C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9F402929633A6F000E998C /* SceneDelegate.swift */; };
 		FC9F403129633A70000E998C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC9F403029633A70000E998C /* Assets.xcassets */; };
 		FC9F403429633A70000E998C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC9F403229633A70000E998C /* LaunchScreen.storyboard */; };
-		FC9F404429633F8F000E998C /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9F404329633F8F000E998C /* TabBarController.swift */; };
+		FC9F404429633F8F000E998C /* PSTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9F404329633F8F000E998C /* PSTabBarController.swift */; };
 		FC9F4046296340DE000E998C /* PhotosCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9F4045296340DE000E998C /* PhotosCollectionViewController.swift */; };
 		FC9F40492963416C000E998C /* PhotoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9F40482963416C000E998C /* PhotoViewCell.swift */; };
 		FC9F404B29634203000E998C /* FavoriteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9F404A29634203000E998C /* FavoriteListViewController.swift */; };
@@ -42,13 +44,15 @@
 		FC100A7E29636B7A0016304A /* PSRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSRouter.swift; sourceTree = "<group>"; };
 		FC100A8029637CC60016304A /* PhotoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailView.swift; sourceTree = "<group>"; };
 		FC100A83296385AB0016304A /* PhotoDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailViewModel.swift; sourceTree = "<group>"; };
+		FC100A8829639A1E0016304A /* FavoriteListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteListViewModel.swift; sourceTree = "<group>"; };
+		FC100A8A29639A540016304A /* FavoriteCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCellViewModel.swift; sourceTree = "<group>"; };
 		FC9F402429633A6F000E998C /* Photo Search.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Photo Search.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC9F402729633A6F000E998C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FC9F402929633A6F000E998C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		FC9F403029633A70000E998C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FC9F403329633A70000E998C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FC9F403529633A70000E998C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FC9F404329633F8F000E998C /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		FC9F404329633F8F000E998C /* PSTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSTabBarController.swift; sourceTree = "<group>"; };
 		FC9F4045296340DE000E998C /* PhotosCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewController.swift; sourceTree = "<group>"; };
 		FC9F40482963416C000E998C /* PhotoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewCell.swift; sourceTree = "<group>"; };
 		FC9F404A29634203000E998C /* FavoriteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteListViewController.swift; sourceTree = "<group>"; };
@@ -89,12 +93,39 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		FC100A8229637CCF0016304A /* Views */ = {
+		FC100A8229637CCF0016304A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FC9F404F296342E5000E998C /* PhotoDetailViewController.swift */,
 				FC100A8029637CC60016304A /* PhotoDetailView.swift */,
 			);
-			path = Views;
+			path = View;
+			sourceTree = "<group>";
+		};
+		FC100A85296398A40016304A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				FC100A83296385AB0016304A /* PhotoDetailViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		FC100A862963999D0016304A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FC9F404C29634235000E998C /* FavoritePhotoViewCell.swift */,
+				FC9F404A29634203000E998C /* FavoriteListViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		FC100A87296399A50016304A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				FC100A8829639A1E0016304A /* FavoriteListViewModel.swift */,
+				FC100A8A29639A540016304A /* FavoriteCellViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		FC9F401B29633A6F000E998C = {
@@ -161,7 +192,7 @@
 		FC9F403E29633DA1000E998C /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				FC9F404329633F8F000E998C /* TabBarController.swift */,
+				FC9F404329633F8F000E998C /* PSTabBarController.swift */,
 				FC100A7829636A320016304A /* PSBaseViewController.swift */,
 				FC100A7A29636A8F0016304A /* PSBaseView.swift */,
 				FC100A7C29636AFC0016304A /* PSConfigurator.swift */,
@@ -191,8 +222,8 @@
 		FC9F404229633E3F000E998C /* FavoriteModule */ = {
 			isa = PBXGroup;
 			children = (
-				FC9F404A29634203000E998C /* FavoriteListViewController.swift */,
-				FC9F404C29634235000E998C /* FavoritePhotoViewCell.swift */,
+				FC100A862963999D0016304A /* View */,
+				FC100A87296399A50016304A /* ViewModel */,
 			);
 			path = FavoriteModule;
 			sourceTree = "<group>";
@@ -209,9 +240,8 @@
 		FC9F404E29634266000E998C /* PhotoDetailModule */ = {
 			isa = PBXGroup;
 			children = (
-				FC100A8229637CCF0016304A /* Views */,
-				FC9F404F296342E5000E998C /* PhotoDetailViewController.swift */,
-				FC100A83296385AB0016304A /* PhotoDetailViewModel.swift */,
+				FC100A8229637CCF0016304A /* View */,
+				FC100A85296398A40016304A /* ViewModel */,
 			);
 			path = PhotoDetailModule;
 			sourceTree = "<group>";
@@ -330,8 +360,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FC9F404429633F8F000E998C /* TabBarController.swift in Sources */,
+				FC9F404429633F8F000E998C /* PSTabBarController.swift in Sources */,
 				FC9F402829633A6F000E998C /* AppDelegate.swift in Sources */,
+				FC100A8929639A1E0016304A /* FavoriteListViewModel.swift in Sources */,
+				FC100A8B29639A540016304A /* FavoriteCellViewModel.swift in Sources */,
 				FC100A7929636A320016304A /* PSBaseViewController.swift in Sources */,
 				FC9F404B29634203000E998C /* FavoriteListViewController.swift in Sources */,
 				FC9F405829634472000E998C /* StorageManager.swift in Sources */,

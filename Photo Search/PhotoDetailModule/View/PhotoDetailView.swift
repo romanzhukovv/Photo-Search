@@ -119,9 +119,8 @@ extension PhotoDetailView {
         locationLabel.text = viewModel.location
         downloadsCountLabel.text = viewModel.downloadsCount
         
-        favoriteButton.setTitle(StorageManager.shared.checkFavorite(photo: photo) ? "Delete from favorite" : "Save to favorite", for: .normal)
-        
-        favoriteButton.backgroundColor = StorageManager.shared.checkFavorite(photo: photo) ? .systemRed : .systemBlue
+        favoriteButton.setTitle(viewModel.isFavorite ? "Delete from favorite" : "Save to favorite", for: .normal)
+        favoriteButton.backgroundColor = viewModel.isFavorite ? .systemRed : .systemBlue
         
     }
 }
@@ -132,6 +131,4 @@ private extension PhotoDetailView {
             self.activityIndicator.stopAnimating()
         }
     }
-    
-    
 }

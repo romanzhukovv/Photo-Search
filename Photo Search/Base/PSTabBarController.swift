@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class TabBarController: UITabBarController {
+final class PSTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,7 +17,7 @@ final class TabBarController: UITabBarController {
     }
 }
 
-extension TabBarController {
+extension PSTabBarController {
     private func setupTabBar() {
         view.backgroundColor = .systemBackground
         UITabBar.appearance().barTintColor = .systemBackground

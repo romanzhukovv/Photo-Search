@@ -12,7 +12,11 @@ class StorageManager {
     
     let realm = try! Realm()
     
-    private init() {}
+    var favoritePhotos: Results<Photo>
+    
+    private init() {
+        favoritePhotos = realm.objects(Photo.self)
+    }
     
     func savePhoto(photo: Photo) {
         write {

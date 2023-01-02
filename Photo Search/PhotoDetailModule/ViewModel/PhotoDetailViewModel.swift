@@ -12,10 +12,12 @@ protocol PhotoDetailViewModelProtocol {
     var createdDate: String { get }
     var location: String { get }
     var downloadsCount: String { get }
-    var isFavorite: Bool { get set }
+    var isFavorite: Bool { get }
     
     init(photo: Photo)
     func getPhotoURL() -> URL
+    func deletePhoto()
+    func savePhoto()
 }
 
 final class PhotoDetailViewModel: PhotoDetailViewModelProtocol {
@@ -37,11 +39,7 @@ final class PhotoDetailViewModel: PhotoDetailViewModelProtocol {
     }
     
     var isFavorite: Bool {
-        get {
-            
-        } set {
-            
-        }
+        StorageManager.shared.checkFavorite(photo: photo)
     }
     
     private let photo: Photo
@@ -55,5 +53,13 @@ final class PhotoDetailViewModel: PhotoDetailViewModelProtocol {
             fatalError("Could not create URL from the given string.")
         }
         return url
+    }
+    
+    func deletePhoto() {
+        StorageManager.shared.deletePhoto(photo: photo)
+    }
+    
+    func savePhoto() {
+        StorageManager.shared.savePhoto(photo: photo)
     }
 }

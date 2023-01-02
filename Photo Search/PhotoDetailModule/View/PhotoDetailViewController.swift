@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PhotoDetailViewController: PSBaseViewController<PhotoDetailView> {
+final class PhotoDetailViewController: PSBaseViewController<PhotoDetailView> {
     
     var viewModel: PhotoDetailViewModelProtocol!
     
@@ -21,26 +21,26 @@ class PhotoDetailViewController: PSBaseViewController<PhotoDetailView> {
 
 extension PhotoDetailViewController {
     @objc private func favoriteButtonAction() {
-        showAlert(isFavorite: StorageManager.shared.checkFavorite(photo: photo))
+        showAlert(isFavorite: viewModel.isFavorite)
     }
     
-    private func showAlert(favoriteStatus: Bool) {
+    private func showAlert(isFavorite: Bool) {
         let alertController = UIAlertController(title: isFavorite ? "Deleting" : "Saving",
                                                 message: isFavorite ? "Photo was deleted from favorite list" : "Photo was saved to favorite list" ,
                                                 preferredStyle: .alert)
         let submitAction = UIAlertAction(title: "Ok", style: .default) { _ in
             if isFavorite {
-                StorageManager.shared.deletePhoto(photo: self.photo)
+                self.viewModel.deletePhoto()
                 self.navigationController?.popViewController(animated: true)
             } else {
-                StorageManager.shared.savePhoto(photo: self.photo)
+                self.viewModel.savePhoto()
                 
-                self.favoriteButton.setTitle(StorageManager.shared.checkFavorite(photo: self.photo) ? "Delete from favorite" : "Save to favorite", for: .normal)
-                self.favoriteButton.backgroundColor = StorageManager.shared.checkFavorite(photo: self.photo) ? .systemRed : .systemBlue
+                self.rootView.favoriteButton.setTitle(isFavorite ? "Delete from favorite" : "Save to favorite", for: .normal)
+                self.rootView.favoriteButton.backgroundColor = isFavorite ? .systemRed : .systemBlue
             }
         }
-        alertController.addAction(submitAction)
         
+        alertController.addAction(submitAction)
         present(alertController, animated: true, completion: nil)
     }
 }
