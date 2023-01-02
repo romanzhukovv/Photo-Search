@@ -7,24 +7,28 @@
 
 import UIKit
 
-final class TabBarViewController: UITabBarController {
+final class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-           setupVCs()
+        
+        setupTabBar()
+        setupVCs()
     }
 }
 
-extension TabBarViewController {
-    private func setupVCs() {
+extension TabBarController {
+    private func setupTabBar() {
         view.backgroundColor = .systemBackground
         UITabBar.appearance().barTintColor = .systemBackground
         tabBar.tintColor = .label
-        
+    }
+    
+    private func setupVCs() {
         viewControllers = [
-            createNavController(for: PhotosCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout()),
-                                   title: "Photos",
-                                   image: UIImage(systemName: "photo.on.rectangle.angled") ?? UIImage()),
+            createNavController(for: PhotosCollectionViewController(collectionViewLayout:               UICollectionViewFlowLayout()),
+                                title: "Photos",
+                                image: UIImage(systemName: "photo.on.rectangle.angled") ?? UIImage()),
             createNavController(for: FavoriteListViewController(),
                                 title: "Favorite",
                                 image: UIImage(systemName: "heart.fill") ?? UIImage())
@@ -32,8 +36,8 @@ extension TabBarViewController {
     }
     
     private func createNavController(for rootViewController: UIViewController,
-                                                    title: String,
-                                                    image: UIImage) -> UIViewController {
+                                     title: String,
+                                     image: UIImage) -> UIViewController {
           let navController = UINavigationController(rootViewController: rootViewController)
           navController.tabBarItem.title = title
           navController.tabBarItem.image = image
