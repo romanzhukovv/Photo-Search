@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import RealmSwift
 
 class FavoriteListViewController: UITableViewController {
     var favoritePhotos: Results<Photo>!
@@ -40,7 +41,7 @@ class FavoriteListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let photo = favoritePhotos[indexPath.row]
-        let detailVC = DetailViewController(photo: photo)
+        let detailVC = PhotoDetailViewController(photo: photo)
         detailVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(detailVC, animated: true)
     }

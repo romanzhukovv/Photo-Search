@@ -39,11 +39,11 @@ class PhotosCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoViewCell.reuseId, for: indexPath) as? PhotoViewCell else return { UICollectionViewCell() }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoViewCell.reuseId, for: indexPath) as! PhotoViewCell
         let photo: Photo
         
         if isSearching {
-            guard let searchedPhoto = searchedPhotos?.results[indexPath.row] else { return cell ?? UICollectionViewCell() }
+            guard let searchedPhoto = searchedPhotos?.results[indexPath.row] else { return cell }
             photo = searchedPhoto
         } else {
             photo = photos[indexPath.row]
@@ -63,7 +63,7 @@ class PhotosCollectionViewController: UICollectionViewController {
             photo = photos[indexPath.row]
         }
         
-        let detailVC = DetailViewController(photo: photo)
+        let detailVC = PhotoDetailViewController(photo: photo)
         
         detailVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(detailVC, animated: true)
