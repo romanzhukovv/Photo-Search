@@ -32,10 +32,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                                         title: Constants.Strings.Favorite.title,
                                         image: Constants.Images.Favorite.tabBarImage)
         
-        tabBar.viewControllers = [
-            photosNavController,
-            favoriteNavController
-        ]
+        tabBar.viewControllers = [photosNavController, favoriteNavController]
         
         window?.rootViewController = tabBar
         window?.makeKeyAndVisible()
