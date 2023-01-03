@@ -23,7 +23,7 @@ final class PhotoViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: .zero)
         
-        configureCell()
+//        configureCell()
     }
     
     required init?(coder: NSCoder) {
@@ -37,7 +37,7 @@ final class PhotoViewCell: UICollectionViewCell {
 }
 
 extension PhotoViewCell {
-    private func configureCell() {
+    func configureCell() {
         photoImageView.kf.setImage(with: viewModel.getPhotoURL())
         
         layoutViews()

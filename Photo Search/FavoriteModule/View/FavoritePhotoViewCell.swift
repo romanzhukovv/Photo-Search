@@ -30,7 +30,6 @@ final class FavoritePhotoViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        configureCell()
     }
 
     required init?(coder: NSCoder) {
@@ -39,7 +38,7 @@ final class FavoritePhotoViewCell: UITableViewCell {
 }
 
 extension FavoritePhotoViewCell {
-    private func configureCell() {
+    func configureCell() {
         photoImageView.kf.setImage(with: viewModel.getPhotoURL())
         authorNameLabel.text = viewModel.authorName
 

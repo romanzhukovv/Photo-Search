@@ -16,9 +16,9 @@ protocol PSConfiguratorProtocol {
 final class PSConfigurator: PSConfiguratorProtocol {
     
     func createPhotosModule(router: PSRouterProtocol) -> UIViewController {
-        let view = PhotosCollectionViewController()
         let photos: [Photo] = []
         let viewModel = PhotosCollectionViewModel(photos: photos)
+        let view = PhotosCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout())
         viewModel.router = router
         view.viewModel = viewModel
         return view

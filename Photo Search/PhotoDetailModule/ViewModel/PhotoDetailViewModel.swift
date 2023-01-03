@@ -62,7 +62,6 @@ final class PhotoDetailViewModel: PhotoDetailViewModelProtocol {
     
     func deletePhoto() {
         StorageManager.shared.deletePhoto(photo: photo)
-        router?.popPhotoDetailView()
     }
     
     func savePhoto() {

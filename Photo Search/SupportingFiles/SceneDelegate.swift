@@ -15,7 +15,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        window?.rootViewController = PSTabBarController()
+        
+        let configurator = PSConfigurator()
+        let router = PSRouter(configurator: configurator)
+        let tabBar = PSTabBarController()
+        let photosNavController = UINavigationController()
+        let favoriteNavController = UINavigationController()
+        
+        router.initPhotoCollectionView(navigationController: photosNavController)
+        router.initFavoriteListView(navigationController: favoriteNavController)
+        
+        tabBar.viewControllers = [
+            photosNavController,
+            favoriteNavController
+        ]
+        
+        window?.rootViewController = tabBar
         window?.makeKeyAndVisible()
     }
 }

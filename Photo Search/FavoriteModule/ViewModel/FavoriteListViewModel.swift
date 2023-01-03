@@ -11,7 +11,7 @@ protocol FavoriteListViewModelProtocol: AnyObject {
     var router: PSRouterProtocol? { get set }
     
     func cellViewModel(at indexPath: IndexPath) -> FavoritePhotoCellViewModelProtocol
-    func didSelectRow(at indexPath: IndexPath)
+    func photoDetailViewModel(at indexPath: IndexPath) -> PhotoDetailViewModelProtocol
     func numberOfRows() -> Int
 }
 
@@ -24,11 +24,9 @@ final class FavoriteListViewModel: FavoriteListViewModelProtocol {
         return FavoritePhotoCellViewModel(favoritePhoto: favoritePhoto)
     }
     
-    func didSelectRow(at indexPath: IndexPath) {
+    func photoDetailViewModel(at indexPath: IndexPath) -> PhotoDetailViewModelProtocol {
         let photo = StorageManager.shared.favoritePhotos[indexPath.row]
-        let viewModel = PhotoDetailViewModel(photo: photo)
-        
-        router?.pushPhotoDetailView(viewModel: viewModel)
+        return PhotoDetailViewModel(photo: photo)
     }
     
     func numberOfRows() -> Int {

@@ -32,6 +32,7 @@ extension PhotoDetailViewController {
         let submitAction = UIAlertAction(title: "Ok", style: .default) { _ in
             if isFavorite {
                 self.viewModel.deletePhoto()
+                self.viewModel.router?.popPhotoDetailView(navigationController: self.navigationController)
             } else {
                 self.viewModel.savePhoto()
                 

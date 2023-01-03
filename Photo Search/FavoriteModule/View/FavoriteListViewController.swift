@@ -32,11 +32,13 @@ extension FavoriteListViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: FavoritePhotoViewCell.reuseId,
                                                        for: indexPath) as? FavoritePhotoViewCell else { return UITableViewCell() }
         cell.viewModel = viewModel.cellViewModel(at: indexPath)
+        cell.configureCell()
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.didSelectRow(at: indexPath)
+        let viewModel = viewModel.photoDetailViewModel(at: indexPath)
+        self.viewModel.router?.pushPhotoDetailView(viewModel: viewModel, navigationController: navigationController)
     }
     
     private func setupTableView() {

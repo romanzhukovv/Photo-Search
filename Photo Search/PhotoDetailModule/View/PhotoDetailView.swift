@@ -60,6 +60,20 @@ final class PhotoDetailView: PSBaseView {
         button.layer.cornerRadius = 10
         return button
     }()
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        fetchFullSizePhoto(url: viewModel.getPhotoURL())
+        
+        authorNameLabel.text = viewModel.authorName
+        createdDateLabel.text = viewModel.createdDate
+        locationLabel.text = viewModel.location
+        downloadsCountLabel.text = viewModel.downloadsCount
+        
+        favoriteButton.setTitle(viewModel.isFavorite ? "Delete from favorite" : "Save to favorite", for: .normal)
+        favoriteButton.backgroundColor = viewModel.isFavorite ? .systemRed : .systemBlue
+    }
 }
 
 extension PhotoDetailView {
@@ -112,15 +126,8 @@ extension PhotoDetailView {
         super.configureViews()
         
         activityIndicator.startAnimating()
-        fetchFullSizePhoto(url: viewModel.getPhotoURL())
         
-        authorNameLabel.text = viewModel.authorName
-        createdDateLabel.text = viewModel.createdDate
-        locationLabel.text = viewModel.location
-        downloadsCountLabel.text = viewModel.downloadsCount
         
-        favoriteButton.setTitle(viewModel.isFavorite ? "Delete from favorite" : "Save to favorite", for: .normal)
-        favoriteButton.backgroundColor = viewModel.isFavorite ? .systemRed : .systemBlue
         
     }
 }

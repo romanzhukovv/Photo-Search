@@ -26,38 +26,34 @@ final class PhotosCollectionViewController: UICollectionViewController {
         super.viewDidLoad()
         
         setupCollectionView()
-        viewModel.getPhotos()
-        collectionView.reloadData()
+        viewModel.getPhotos {
+            self.collectionView.reloadData()
+        }
         setupSearchController()
     }
+}
 
-    // MARK: UICollectionViewDataSource
-    
+extension PhotosCollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel.numberOfPhotos()
+        return viewModel.numberOfPhotos()
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoViewCell.reuseId,
                                                             for: indexPath) as? PhotoViewCell else { return UICollectionViewCell() }
         cell.viewModel = viewModel.cellViewModel(at: indexPath)
+        cell.configureCell()
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let photo: Photo
-//
-//        if self.isSearching {
-//            guard let searchedPhoto = searchedPhotos?.results[indexPath.row] else { return }
-//            photo = searchedPhoto
-//        } else {
-//            photo = photos[indexPath.row]
-//        }
-//        
-//        let detailVC = PhotoDetailViewController(photo: photo)
-//
-//        detailVC.hidesBottomBarWhenPushed = true
-//        navigationController?.pushViewController(detailVC, animated: true)
+        let viewModel = viewModel.photoDetailViewModel(at: indexPath)
+        self.viewModel.router?.pushPhotoDetailView(viewModel: viewModel, navigationController: navigationController)
+    }
+    
+    private func setupCollectionView() {
+        collectionView.backgroundColor = .white
+        collectionView!.register(PhotoViewCell.self, forCellWithReuseIdentifier: PhotoViewCell.reuseId)
     }
 }
 
@@ -99,9 +95,4 @@ extension PhotosCollectionViewController: UISearchBarDelegate {
     }
 }
 
-extension PhotosCollectionViewController {
-    private func setupCollectionView() {
-        collectionView.backgroundColor = .white
-        collectionView!.register(PhotoViewCell.self, forCellWithReuseIdentifier: PhotoViewCell.reuseId)
-    }
-}
+

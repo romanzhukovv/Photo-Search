@@ -15,9 +15,10 @@ protocol PhotosCollectionViewModelProtocol: AnyObject {
     init(photos: [Photo])
     
     func cellViewModel(at indexPath: IndexPath) -> PhotoCellViewModelProtocol
-    func getPhotos()
+    func getPhotos(completion: @escaping(() -> Void))
     func searchPhotos(query: String)
     func numberOfPhotos() -> Int
+    func photoDetailViewModel(at indexPath: IndexPath) -> PhotoDetailViewModelProtocol
 }
 
 final class PhotosCollectionViewModel: PhotosCollectionViewModelProtocol {
@@ -44,11 +45,12 @@ final class PhotosCollectionViewModel: PhotosCollectionViewModelProtocol {
         }
     }
     
-    func getPhotos() {
+    func getPhotos(completion: @escaping(() -> Void)) {
         NetworkManager.shared.fetchData { result in
             switch result {
             case .success(let data):
                 self.photos = data
+                completion()
             case .failure(let error):
                 print(error)
             }
@@ -68,8 +70,22 @@ final class PhotosCollectionViewModel: PhotosCollectionViewModelProtocol {
     
     func numberOfPhotos() -> Int {
         if isSearching ?? false {
+            print("search")
             return searchedPhotos?.results.count ?? 0
         }
         return photos.count
+    }
+    
+    func photoDetailViewModel(at indexPath: IndexPath) -> PhotoDetailViewModelProtocol {
+        let photo: Photo
+        
+        if isSearching ?? false {
+            guard let searchedPhoto = searchedPhotos?.results[indexPath.row] else { return PhotoDetailViewModel(photo: Photo()) }
+            photo = searchedPhoto
+        } else {
+            photo = photos[indexPath.row]
+        }
+        
+        return PhotoDetailViewModel(photo: photo)
     }
 }
