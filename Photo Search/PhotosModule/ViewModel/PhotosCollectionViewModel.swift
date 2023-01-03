@@ -67,10 +67,9 @@ final class PhotosCollectionViewModel: PhotosCollectionViewModelProtocol {
     }
     
     func numberOfPhotos() -> Int {
-        if searchedPhotos != nil {
-            return searchedPhotos?.results.count ?? 0
-        }
-        return photos.count
+        searchedPhotos != nil ?
+        searchedPhotos?.results.count ?? 0 :
+        photos.count
     }
     
     func photoDetailViewModel(at indexPath: IndexPath) -> PhotoDetailViewModelProtocol {

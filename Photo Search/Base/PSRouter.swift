@@ -18,7 +18,7 @@ protocol PSRouterProtocol {
     func popPhotoDetailView(navigationController: UINavigationController?)
 }
 
-class PSRouter: PSRouterProtocol {
+final class PSRouter: PSRouterProtocol {
     
     var configurator: PSConfiguratorProtocol?
 
@@ -35,6 +35,7 @@ class PSRouter: PSRouterProtocol {
             navigationController.tabBarItem.title = title
             navigationController.tabBarItem.image = image
             navigationController.navigationBar.prefersLargeTitles = true
+            navigationController.navigationBar.tintColor = .black
             initialViewController.navigationItem.title = title
         }
     }

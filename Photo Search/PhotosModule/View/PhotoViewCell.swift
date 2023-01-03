@@ -9,6 +9,7 @@ import UIKit
 import Kingfisher
 
 final class PhotoViewCell: UICollectionViewCell {
+    
     var viewModel: PhotoCellViewModelProtocol!
     
     static let reuseId = "PhotoCell"
@@ -19,16 +20,6 @@ final class PhotoViewCell: UICollectionViewCell {
         imageView.clipsToBounds = true
         return imageView
     }()
-    
-    override init(frame: CGRect) {
-        super.init(frame: .zero)
-        
-//        configureCell()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -44,8 +35,7 @@ extension PhotoViewCell {
     }
     
     private func layoutViews() {
-        contentView.addSubview(photoImageView)
-        photoImageView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.setupViews(photoImageView)
         
         NSLayoutConstraint.activate([
             photoImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
