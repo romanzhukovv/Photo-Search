@@ -10,8 +10,10 @@ import UIKit
 protocol PSRouterProtocol {
     var configurator: PSConfiguratorProtocol? { get set }
     
-    func initPhotoCollectionView(navigationController: UINavigationController?)
-    func initFavoriteListView(navigationController: UINavigationController?)
+    func initTabBarViewController(navigationController: UINavigationController?,
+                                  initialViewController: UIViewController,
+                                  title: String,
+                                  image: UIImage)
     func pushPhotoDetailView(viewModel: PhotoDetailViewModelProtocol, navigationController: UINavigationController?)
     func popPhotoDetailView(navigationController: UINavigationController?)
 }
@@ -23,26 +25,17 @@ class PSRouter: PSRouterProtocol {
     init(configurator: PSConfiguratorProtocol) {
         self.configurator = configurator
     }
-
-    func initPhotoCollectionView(navigationController: UINavigationController?) {
-        if let navigationController = navigationController {
-            guard let initialViewController = configurator?.createPhotosModule(router: self) else { return }
-            navigationController.viewControllers = [initialViewController]
-            navigationController.tabBarItem.title = "Photos"
-            navigationController.tabBarItem.image = UIImage(systemName: "photo.on.rectangle.angled") ?? UIImage()
-            navigationController.navigationBar.prefersLargeTitles = true
-            initialViewController.navigationItem.title = "Photos"
-        }
-    }
     
-    func initFavoriteListView(navigationController: UINavigationController?) {
+    func initTabBarViewController(navigationController: UINavigationController?,
+                                  initialViewController: UIViewController,
+                                  title: String,
+                                  image: UIImage) {
         if let navigationController = navigationController {
-            guard let initialViewController = configurator?.createFavoriteModule(router: self) else { return }
             navigationController.viewControllers = [initialViewController]
-            navigationController.tabBarItem.title = "Favorite"
-            navigationController.tabBarItem.image = UIImage(systemName: "heart.fill") ?? UIImage()
+            navigationController.tabBarItem.title = title
+            navigationController.tabBarItem.image = image
             navigationController.navigationBar.prefersLargeTitles = true
-            initialViewController.navigationItem.title = "Favorite"
+            initialViewController.navigationItem.title = title
         }
     }
     
