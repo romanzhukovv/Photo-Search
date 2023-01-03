@@ -35,9 +35,7 @@ extension PhotoDetailViewController {
                 self.viewModel.router?.popPhotoDetailView(navigationController: self.navigationController)
             } else {
                 self.viewModel.savePhoto()
-                
-                self.rootView.favoriteButton.setTitle(isFavorite ? "Delete from favorite" : "Save to favorite", for: .normal)
-                self.rootView.favoriteButton.backgroundColor = isFavorite ? .systemRed : .systemBlue
+                self.rootView.configureFavoriteButton(isFavorite: true)
             }
         }
         
