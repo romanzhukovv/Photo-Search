@@ -13,6 +13,7 @@ final class PhotoDetailViewController: PSBaseViewController<PhotoDetailView> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         rootView.favoriteButton.addTarget(self,
                                           action: #selector(favoriteButtonAction),
                                           for: .touchUpInside)
@@ -31,7 +32,6 @@ extension PhotoDetailViewController {
         let submitAction = UIAlertAction(title: "Ok", style: .default) { _ in
             if isFavorite {
                 self.viewModel.deletePhoto()
-                self.navigationController?.popViewController(animated: true)
             } else {
                 self.viewModel.savePhoto()
                 

@@ -7,8 +7,9 @@
 
 import Foundation
 
-protocol PhotoCellViewModelProtocol {
+protocol PhotoCellViewModelProtocol: AnyObject {
     init(photo: Photo)
+    
     func getPhotoURL() -> URL
 }
 
@@ -21,6 +22,9 @@ final class PhotoCellViewModel: PhotoCellViewModelProtocol {
     }
     
     func getPhotoURL() -> URL {
-        
+        guard let url = URL(string: photo.urls?.small ?? "") else {
+            fatalError("Could not create URL from the given string.")
+        }
+        return url
     }
 }

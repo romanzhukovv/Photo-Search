@@ -7,9 +7,11 @@
 
 import Foundation
 
-protocol FavoritePhotoCellViewModelProtocol {
+protocol FavoritePhotoCellViewModelProtocol: AnyObject {
     var authorName: String { get }
+    
     init(favoritePhoto: Photo)
+    
     func getPhotoURL() -> URL
 }
 

@@ -8,43 +8,50 @@
 import UIKit
 
 protocol PSRouterProtocol {
-//    var navigationController: UINavigationController? { get set }
-//    var configurator: FTConfiguratorProtocol? { get set }
+    var navigationController: UINavigationController? { get set }
+    var configurator: PSConfiguratorProtocol? { get set }
 //    
-//    func initTransactionsListView()
-//    func pushNewTransactionView(viewModel: NewTransactionViewModelProtocol)
-//    func popNewTransactionView()
+    func initPhotoCollectionView()
+    func initFavoriteListView()
+    func pushPhotoDetailView(viewModel: PhotoDetailViewModelProtocol)
+    func popPhotoDetailView()
 }
 
 class PSRouter: PSRouterProtocol {
-//    var navigationController: UINavigationController?
-//    var configurator: FTConfiguratorProtocol?
-//
-//    init(navigationController: UINavigationController, configurator: FTConfiguratorProtocol) {
-//        self.navigationController = navigationController
-//        self.configurator = configurator
-//    }
-//
-//    func initTransactionsListView() {
-//        if let navigationController = navigationController {
-//            guard let initialViewController = configurator?.createTransactionListModule(router: self) else { return }
-//            initialViewController.title = "Transactions"
-//            navigationController.viewControllers = [initialViewController]
-//        }
-//    }
-//
-//    func pushNewTransactionView(viewModel: NewTransactionViewModelProtocol) {
-//        if let navigationController = navigationController {
-//            guard let newTransactionView = configurator?.createNewTransactionModule(router: self, viewModel: viewModel) else { return }
-//            newTransactionView.title = "New Transaction"
-//            newTransactionView.navigationItem.largeTitleDisplayMode = .never
-//            navigationController.pushViewController(newTransactionView, animated: true)
-//        }
-//    }
-//
-//    func popNewTransactionView() {
-//        if let navigationController = navigationController {
-//            navigationController.popViewController(animated: true)
-//        }
-//    }
+    
+    var navigationController: UINavigationController?
+    var configurator: PSConfiguratorProtocol?
+
+    init(navigationController: UINavigationController, configurator: PSConfiguratorProtocol) {
+        self.navigationController = navigationController
+        self.configurator = configurator
+    }
+
+    func initPhotoCollectionView() {
+        if let navigationController = navigationController {
+            guard let initialViewController = configurator?.createPhotosModule(router: self) else { return }
+            navigationController.viewControllers = [initialViewController]
+        }
+    }
+    
+    func initFavoriteListView() {
+        if let navigationController = navigationController {
+            guard let initialViewController = configurator?.createFavoriteModule(router: self) else { return }
+            navigationController.viewControllers = [initialViewController]
+        }
+    }
+    
+    func pushPhotoDetailView(viewModel: PhotoDetailViewModelProtocol) {
+        if let navigationController = navigationController {
+            guard let photoDetailView = configurator?.createPhotoDetailModule(router: self, viewModel: viewModel) else { return }
+            photoDetailView.hidesBottomBarWhenPushed = true
+            navigationController.pushViewController(photoDetailView, animated: true)
+        }
+    }
+    
+    func popPhotoDetailView() {
+        if let navigationController = navigationController {
+            navigationController.popViewController(animated: true)
+        }
+    }
 }

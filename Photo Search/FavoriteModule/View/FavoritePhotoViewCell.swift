@@ -39,7 +39,7 @@ final class FavoritePhotoViewCell: UITableViewCell {
 }
 
 extension FavoritePhotoViewCell {
-    func configureCell() {
+    private func configureCell() {
         photoImageView.kf.setImage(with: viewModel.getPhotoURL())
         authorNameLabel.text = viewModel.authorName
 

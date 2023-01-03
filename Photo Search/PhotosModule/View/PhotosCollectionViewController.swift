@@ -38,7 +38,8 @@ final class PhotosCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoViewCell.reuseId, for: indexPath) as? PhotoViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoViewCell.reuseId,
+                                                            for: indexPath) as? PhotoViewCell else { return UICollectionViewCell() }
         cell.viewModel = viewModel.cellViewModel(at: indexPath)
         return cell
     }

@@ -21,28 +21,24 @@ final class FavoriteListViewController: UITableViewController {
         super.viewWillAppear(animated)
         tableView.reloadData()
     }
+}
 
-    // MARK: - Table view data source
-
+extension FavoriteListViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.numberOfRows()
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: FavoritePhotoViewCell.reuseId, for: indexPath) as? FavoritePhotoViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: FavoritePhotoViewCell.reuseId,
+                                                       for: indexPath) as? FavoritePhotoViewCell else { return UITableViewCell() }
         cell.viewModel = viewModel.cellViewModel(at: indexPath)
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let photo = favoritePhotos[indexPath.row]
-//        let detailVC = PhotoDetailViewController(photo: photo)
-//        detailVC.hidesBottomBarWhenPushed = true
-//        navigationController?.pushViewController(detailVC, animated: true)
+        viewModel.didSelectRow(at: indexPath)
     }
-}
-
-extension FavoriteListViewController {
+    
     private func setupTableView() {
         tableView.register(FavoritePhotoViewCell.self, forCellReuseIdentifier: FavoritePhotoViewCell.reuseId)
         tableView.backgroundColor = .white

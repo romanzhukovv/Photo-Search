@@ -7,7 +7,9 @@
 
 import Foundation
 
-protocol PhotoDetailViewModelProtocol {
+protocol PhotoDetailViewModelProtocol: AnyObject {
+    var router: PSRouterProtocol? { get set }
+    
     var authorName: String { get }
     var createdDate: String { get }
     var location: String { get }
@@ -15,12 +17,15 @@ protocol PhotoDetailViewModelProtocol {
     var isFavorite: Bool { get }
     
     init(photo: Photo)
+    
     func getPhotoURL() -> URL
     func deletePhoto()
     func savePhoto()
 }
 
 final class PhotoDetailViewModel: PhotoDetailViewModelProtocol {
+    
+    var router: PSRouterProtocol?
     
     var authorName: String {
         photo.user?.name ?? "No author name"
@@ -57,6 +62,7 @@ final class PhotoDetailViewModel: PhotoDetailViewModelProtocol {
     
     func deletePhoto() {
         StorageManager.shared.deletePhoto(photo: photo)
+        router?.popPhotoDetailView()
     }
     
     func savePhoto() {

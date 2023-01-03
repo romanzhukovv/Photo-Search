@@ -8,28 +8,35 @@
 import UIKit
 
 protocol PSConfiguratorProtocol {
-//    func createTransactionListModule(router: FTRouterProtocol) -> UIViewController
-//    func createNewTransactionModule(router: FTRouterProtocol, viewModel: NewTransactionViewModelProtocol) -> UIViewController
+    func createPhotosModule(router: PSRouterProtocol) -> UIViewController
+    func createFavoriteModule(router: PSRouterProtocol) -> UIViewController
+    func createPhotoDetailModule(router: PSRouterProtocol, viewModel: PhotoDetailViewModelProtocol) -> UIViewController
 }
 
 final class PSConfigurator: PSConfiguratorProtocol {
     
-//    func createTransactionListModule(router: FTRouterProtocol) -> UIViewController {
-//        let transactions: [Transaction] = []
-//        let view = TransactionsViewController()
-//        let viewModel = TransactionsViewModel()
-//        viewModel.transactions = transactions
-//        viewModel.router = router
-//        view.viewModel = viewModel
-//        view.rootView.viewModel = viewModel
-//        return view
-//    }
+    func createPhotosModule(router: PSRouterProtocol) -> UIViewController {
+        let view = PhotosCollectionViewController()
+        let photos: [Photo] = []
+        let viewModel = PhotosCollectionViewModel(photos: photos)
+        viewModel.router = router
+        view.viewModel = viewModel
+        return view
+    }
     
-//    func createNewTransactionModule(router: FTRouterProtocol, viewModel: NewTransactionViewModelProtocol) -> UIViewController {
-//        let view = NewTransactionViewController()
-//        viewModel.router = router
-//        view.viewModel = viewModel
-//        view.rootView.viewModel = viewModel
-//        return view
-//    }
+    func createFavoriteModule(router: PSRouterProtocol) -> UIViewController {
+        let view = FavoriteListViewController()
+        let viewModel = FavoriteListViewModel()
+        viewModel.router = router
+        view.viewModel = viewModel
+        return view
+    }
+    
+    func createPhotoDetailModule(router: PSRouterProtocol, viewModel: PhotoDetailViewModelProtocol) -> UIViewController {
+        let view = PhotoDetailViewController()
+        viewModel.router = router
+        view.viewModel = viewModel
+        view.rootView.viewModel = viewModel
+        return view
+    }
 }

@@ -13,10 +13,17 @@ final class PhotoViewCell: UICollectionViewCell {
     
     static let reuseId = "PhotoCell"
     
-    private let photoImageView = UIImageView()
+    private let photoImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        return imageView
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
+        
+        configureCell()
     }
     
     required init?(coder: NSCoder) {
@@ -30,17 +37,14 @@ final class PhotoViewCell: UICollectionViewCell {
 }
 
 extension PhotoViewCell {
-    func configureCell(photo: Photo) {
-        guard let url = URL(string: photo.urls?.small ?? "") else { return }
-        photoImageView.kf.setImage(with: url)
+    private func configureCell() {
+        photoImageView.kf.setImage(with: viewModel.getPhotoURL())
         
-        photoImageView.contentMode = .scaleAspectFill
-        photoImageView.clipsToBounds = true
-        contentView.addSubview(photoImageView)
-        addConstraints()
+        layoutViews()
     }
     
-    private func addConstraints() {
+    private func layoutViews() {
+        contentView.addSubview(photoImageView)
         photoImageView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([

@@ -7,9 +7,10 @@
 
 import Foundation
 
-protocol PhotosCollectionViewModelProtocol {
+protocol PhotosCollectionViewModelProtocol: AnyObject {
+    var router: PSRouterProtocol? { get set }
     var searchedPhotos: SearchedPhotos? { get set }
-    var isSearching: Bool { get set }
+    var isSearching: Bool? { get set }
     
     init(photos: [Photo])
     
@@ -20,20 +21,21 @@ protocol PhotosCollectionViewModelProtocol {
 }
 
 final class PhotosCollectionViewModel: PhotosCollectionViewModelProtocol {
-    private var photos: [Photo]
+    
+    var router: PSRouterProtocol?
     
     var searchedPhotos: SearchedPhotos?
     
-    var isSearching: Bool {
-        
-    }
+    var isSearching: Bool?
+    
+    private var photos: [Photo]
     
     init(photos: [Photo]) {
         self.photos = photos
     }
     
     func cellViewModel(at indexPath: IndexPath) -> PhotoCellViewModelProtocol {
-        if isSearching {
+        if isSearching ?? false {
             guard let searchedPhoto = searchedPhotos?.results[indexPath.row] else { return PhotoCellViewModel(photo: Photo()) }
             return PhotoCellViewModel(photo: searchedPhoto)
         } else {
@@ -65,7 +67,7 @@ final class PhotosCollectionViewModel: PhotosCollectionViewModelProtocol {
     }
     
     func numberOfPhotos() -> Int {
-        if isSearching {
+        if isSearching ?? false {
             return searchedPhotos?.results.count ?? 0
         }
         return photos.count
