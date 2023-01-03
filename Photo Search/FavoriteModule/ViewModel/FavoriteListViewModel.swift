@@ -20,12 +20,12 @@ final class FavoriteListViewModel: FavoriteListViewModelProtocol {
     var router: PSRouterProtocol?
     
     func cellViewModel(at indexPath: IndexPath) -> FavoritePhotoCellViewModelProtocol {
-        let favoritePhoto = StorageManager.shared.favoritePhotos[indexPath.row]
+        let favoritePhoto = StorageManager.shared.favoritePhotos.reversed()[indexPath.row]
         return FavoritePhotoCellViewModel(favoritePhoto: favoritePhoto)
     }
     
     func photoDetailViewModel(at indexPath: IndexPath) -> PhotoDetailViewModelProtocol {
-        let photo = StorageManager.shared.favoritePhotos[indexPath.row]
+        let photo = StorageManager.shared.favoritePhotos.reversed()[indexPath.row]
         return PhotoDetailViewModel(photo: photo)
     }
     
