@@ -1,4 +1,4 @@
-#  Приложение Unsplash Photos
+#  Приложение Photo Search
 ## Тестовое задание
 Приложение работающее с REST API сервиса [Unsplash](https://unsplash.com).
 
@@ -8,8 +8,10 @@
 
 **Фреймворк**: UIKit, верстка кодом без Storyboard.
 
+**Архитектура**: MVVM + Router + Configurator.
+
 **Используемые библиотеки**: Kingfisher, Realm.
 
 ## Демонстрация функционала
 
-![Unsplash](https://github.com/romanzhukovv/WF-Test-ZhukovR/blob/main/GIFs/Unsplash.gif)
+![Unsplash](https://github.com/romanzhukovv/Photo-Search/blob/main/GIFs/Unsplash.gif)
