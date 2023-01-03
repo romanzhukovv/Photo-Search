@@ -16,11 +16,12 @@ final class PhotosCollectionViewController: UICollectionViewController {
         return text.isEmpty
     }
     
-    private var isSearching: Bool {
-        return searchController.isActive && !searchBarIsEmpty
-    }
-    
-    private let searchController = UISearchController(searchResultsController: nil)
+    private let searchController: UISearchController = {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search photo"
+        return searchController
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,13 +30,12 @@ final class PhotosCollectionViewController: UICollectionViewController {
         viewModel.getPhotos {
             self.collectionView.reloadData()
         }
-        setupSearchController()
     }
 }
 
 extension PhotosCollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.numberOfPhotos()
+        viewModel.numberOfPhotos()
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -53,7 +53,10 @@ extension PhotosCollectionViewController {
     
     private func setupCollectionView() {
         collectionView.backgroundColor = .white
-        collectionView!.register(PhotoViewCell.self, forCellWithReuseIdentifier: PhotoViewCell.reuseId)
+        collectionView.register(PhotoViewCell.self, forCellWithReuseIdentifier: PhotoViewCell.reuseId)
+        
+        navigationItem.searchController = searchController
+        searchController.searchBar.delegate = self
     }
 }
 
@@ -72,26 +75,15 @@ extension PhotosCollectionViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension PhotosCollectionViewController: UISearchBarDelegate {
-    private func setupSearchController() {
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search photo"
-        navigationItem.searchController = searchController
-        searchController.searchBar.delegate = self
-    }
-    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        viewModel.searchPhotos(query: searchController.searchBar.text ?? "")
-        collectionView.reloadData()
+        viewModel.searchPhotos(query: searchController.searchBar.text ?? "") {
+            self.collectionView.reloadData()
+        }
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        if !searchBarIsEmpty && viewModel.searchedPhotos != nil {
-            collectionView.reloadData()
-            viewModel.searchedPhotos = nil
-        } else if searchBarIsEmpty && viewModel.searchedPhotos != nil {
-            collectionView.reloadData()
-            viewModel.searchedPhotos = nil
-        }
+        viewModel.searchedPhotos = nil
+        collectionView.reloadData()
     }
 }
 

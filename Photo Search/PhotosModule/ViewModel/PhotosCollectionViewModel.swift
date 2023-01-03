@@ -10,13 +10,12 @@ import Foundation
 protocol PhotosCollectionViewModelProtocol: AnyObject {
     var router: PSRouterProtocol? { get set }
     var searchedPhotos: SearchedPhotos? { get set }
-    var isSearching: Bool? { get set }
     
     init(photos: [Photo])
     
     func cellViewModel(at indexPath: IndexPath) -> PhotoCellViewModelProtocol
     func getPhotos(completion: @escaping(() -> Void))
-    func searchPhotos(query: String)
+    func searchPhotos(query: String, completion: @escaping(() -> Void))
     func numberOfPhotos() -> Int
     func photoDetailViewModel(at indexPath: IndexPath) -> PhotoDetailViewModelProtocol
 }
@@ -27,8 +26,6 @@ final class PhotosCollectionViewModel: PhotosCollectionViewModelProtocol {
     
     var searchedPhotos: SearchedPhotos?
     
-    var isSearching: Bool?
-    
     private var photos: [Photo]
     
     init(photos: [Photo]) {
@@ -36,7 +33,7 @@ final class PhotosCollectionViewModel: PhotosCollectionViewModelProtocol {
     }
     
     func cellViewModel(at indexPath: IndexPath) -> PhotoCellViewModelProtocol {
-        if isSearching ?? false {
+        if searchedPhotos != nil {
             guard let searchedPhoto = searchedPhotos?.results[indexPath.row] else { return PhotoCellViewModel(photo: Photo()) }
             return PhotoCellViewModel(photo: searchedPhoto)
         } else {
@@ -57,11 +54,12 @@ final class PhotosCollectionViewModel: PhotosCollectionViewModelProtocol {
         }
     }
     
-    func searchPhotos(query: String) {
+    func searchPhotos(query: String, completion: @escaping(() -> Void)) {
         NetworkManager.shared.searchPhotos(query: query) { result in
             switch result {
             case .success(let data):
                 self.searchedPhotos = data
+                completion()
             case .failure(let error):
                 print(error)
             }
@@ -69,8 +67,7 @@ final class PhotosCollectionViewModel: PhotosCollectionViewModelProtocol {
     }
     
     func numberOfPhotos() -> Int {
-        if isSearching ?? false {
-            print("search")
+        if searchedPhotos != nil {
             return searchedPhotos?.results.count ?? 0
         }
         return photos.count
@@ -79,7 +76,7 @@ final class PhotosCollectionViewModel: PhotosCollectionViewModelProtocol {
     func photoDetailViewModel(at indexPath: IndexPath) -> PhotoDetailViewModelProtocol {
         let photo: Photo
         
-        if isSearching ?? false {
+        if searchedPhotos != nil {
             guard let searchedPhoto = searchedPhotos?.results[indexPath.row] else { return PhotoDetailViewModel(photo: Photo()) }
             photo = searchedPhoto
         } else {
