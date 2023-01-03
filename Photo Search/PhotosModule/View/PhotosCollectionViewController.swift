@@ -14,7 +14,7 @@ final class PhotosCollectionViewController: UICollectionViewController {
     private let searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search photo"
+        searchController.searchBar.placeholder = Constants.Strings.Photos.searchBarPlaceholder
         return searchController
     }()
     

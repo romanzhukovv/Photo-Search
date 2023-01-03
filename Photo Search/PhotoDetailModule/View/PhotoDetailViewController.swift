@@ -26,10 +26,17 @@ extension PhotoDetailViewController {
     }
     
     private func showAlert(isFavorite: Bool) {
-        let alertController = UIAlertController(title: isFavorite ? "Deleting" : "Saving",
-                                                message: isFavorite ? "Photo was deleted from favorite list" : "Photo was saved to favorite list" ,
+        let alertController = UIAlertController(title:
+                                                    isFavorite ?
+                                                    Constants.Strings.Detail.deleteAlertTitle :
+                                                    Constants.Strings.Detail.saveAlertTitle,
+                                                message:
+                                                    isFavorite ?
+                                                    Constants.Strings.Detail.deleteAlertMessage :
+                                                    Constants.Strings.Detail.saveAlertMessage ,
                                                 preferredStyle: .alert)
-        let submitAction = UIAlertAction(title: "Ok", style: .default) { _ in
+        let submitAction = UIAlertAction(title: Constants.Strings.Detail.alertSubmitTitle,
+                                         style: .default) { _ in
             if isFavorite {
                 self.viewModel.deletePhoto()
                 self.viewModel.router?.popPhotoDetailView(navigationController: self.navigationController)

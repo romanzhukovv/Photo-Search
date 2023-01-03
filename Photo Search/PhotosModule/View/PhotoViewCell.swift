@@ -29,7 +29,7 @@ final class PhotoViewCell: UICollectionViewCell {
 
 extension PhotoViewCell {
     func configureCell() {
-        photoImageView.kf.setImage(with: viewModel.getPhotoURL())
+        photoImageView.kf.setImage(with: viewModel.getPhotoURL(), options: [.transition(.fade(0.7))])
         
         layoutViews()
     }

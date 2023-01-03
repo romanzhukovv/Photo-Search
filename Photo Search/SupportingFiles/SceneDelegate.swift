@@ -25,12 +25,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         router.initTabBarViewController(navigationController: photosNavController,
                                         initialViewController: configurator.createPhotosModule(router: router),
-                                        title: "Photos",
-                                        image: UIImage(systemName: "photo.on.rectangle.angled") ?? UIImage())
+                                        title: Constants.Strings.Photos.title,
+                                        image: Constants.Images.Photos.tabBarImage)
         router.initTabBarViewController(navigationController: favoriteNavController,
                                         initialViewController: configurator.createFavoriteModule(router: router),
-                                        title: "Favorite",
-                                        image: UIImage(systemName: "heart.fill") ?? UIImage())
+                                        title: Constants.Strings.Favorite.title,
+                                        image: Constants.Images.Favorite.tabBarImage)
         
         tabBar.viewControllers = [
             photosNavController,

@@ -10,7 +10,6 @@ import RealmSwift
 class Photo: Object, Codable {
     @Persisted(primaryKey: true) var id: String?
     @Persisted var created_at: String?
-//    @Persisted var likes: Int?
     @Persisted var urls : Sizes?
     @Persisted var user: User?
     @Persisted var downloads: Int?

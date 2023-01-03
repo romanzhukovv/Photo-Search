@@ -11,12 +11,6 @@ final class PhotoDetailView: PSBaseView {
     
     var viewModel: PhotoDetailViewModelProtocol!
     
-    private let activityIndicator: UIActivityIndicatorView = {
-        let activityIndicator = UIActivityIndicatorView()
-        activityIndicator.hidesWhenStopped = true
-        return activityIndicator
-    }()
-    
     private let photoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -73,7 +67,6 @@ extension PhotoDetailView {
         super.addViews()
         
         setupViews(
-            activityIndicator,
             photoImageView,
             verticalStackView,
             authorNameLabel,
@@ -97,9 +90,6 @@ extension PhotoDetailView {
         super.layoutViews()
         
         NSLayoutConstraint.activate([
-            activityIndicator.centerXAnchor.constraint(equalTo: centerXAnchor),
-            activityIndicator.topAnchor.constraint(equalTo: photoImageView.centerYAnchor),
-            
             photoImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: -40),
             photoImageView.widthAnchor.constraint(equalTo: widthAnchor),
             photoImageView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.45),
@@ -116,21 +106,21 @@ extension PhotoDetailView {
     
     override func configureViews() {
         super.configureViews()
-        
-        activityIndicator.startAnimating()
     }
     
     func configureFavoriteButton(isFavorite: Bool) {
-        favoriteButton.setTitle(isFavorite ? "Delete from favorite" : "Save to favorite", for: .normal)
-        favoriteButton.backgroundColor = isFavorite ? .systemRed : .systemBlue
+        favoriteButton.setTitle(isFavorite ?
+                                Constants.Strings.Detail.deleteButtonTitle :
+                                Constants.Strings.Detail.saveButtonTitle,
+                                for: .normal)
+        favoriteButton.backgroundColor = isFavorite ? Constants.Colors.deleteButton: Constants.Colors.saveButton
     }
 }
 
 private extension PhotoDetailView {
     func fetchFullSizePhoto(url: URL) {
-        photoImageView.kf.setImage(with: url) { _ in
-            self.activityIndicator.stopAnimating()
-        }
+        photoImageView.kf.indicatorType = .activity
+        photoImageView.kf.setImage(with: url)
     }
     
     func updateView() {
