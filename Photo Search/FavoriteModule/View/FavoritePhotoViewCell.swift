@@ -23,8 +23,7 @@ final class FavoritePhotoViewCell: UITableViewCell {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 20
-        imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = 10
         return imageView
     }()
 
@@ -46,10 +45,7 @@ extension FavoritePhotoViewCell {
     }
 
     private func layoutViews() {
-        contentView.addSubview(photoImageView)
-        contentView.addSubview(authorNameLabel)
-        authorNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        photoImageView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.setupViews(photoImageView, authorNameLabel)
 
         NSLayoutConstraint.activate([
             photoImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),

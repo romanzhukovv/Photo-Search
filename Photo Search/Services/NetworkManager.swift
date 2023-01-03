@@ -13,15 +13,25 @@ enum NetworkError: Error {
     case decodingError
 }
 
-class NetworkManager {
+protocol NetworkManagerProtocol {
+    func fetchData(completion: @escaping(Result<[Photo], NetworkError>) -> Void)
+    func searchPhotos(query: String, completion: @escaping(Result<SearchedPhotos, NetworkError>) -> Void)
+}
+
+final class NetworkManager: NetworkManagerProtocol {
+    
     static let shared = NetworkManager()
     
-    private let url = "https://api.unsplash.com/photos/random?&count=30&client_id=j0jvFBCxGG342dl2oyuw497E6Eh7eMvCOQz8gu-U5Ow"
+    private let baseURl = "https://api.unsplash.com/"
+    private let photoCount = 30
+    private let pageCount = 1
+    private let apiKey = "j0jvFBCxGG342dl2oyuw497E6Eh7eMvCOQz8gu-U5Ow"
     
     private init() {}
     
     func fetchData(completion: @escaping(Result<[Photo], NetworkError>) -> Void) {
-        guard let url = URL(string: url) else {
+        let endPoint = baseURl + "photos/random?" + "&count=" + String(photoCount) + "&client_id=" + apiKey
+        guard let url = URL(string: endPoint) else {
             completion(.failure(.invalidURL))
             return
         }
@@ -44,7 +54,8 @@ class NetworkManager {
     }
     
     func searchPhotos(query: String, completion: @escaping(Result<SearchedPhotos, NetworkError>) -> Void) {
-        guard let url = URL(string: "https://api.unsplash.com/search/photos?page=1&query=\(query)&client_id=j0jvFBCxGG342dl2oyuw497E6Eh7eMvCOQz8gu-U5Ow") else {
+        let endPoint = baseURl + "search/photos" + "?page=" + String(pageCount) + "&query=" + query + "&client_id=" + apiKey
+        guard let url = URL(string: endPoint) else {
             completion(.failure(.invalidURL))
             return
         }

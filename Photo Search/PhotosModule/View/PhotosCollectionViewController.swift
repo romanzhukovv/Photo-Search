@@ -11,11 +11,6 @@ final class PhotosCollectionViewController: UICollectionViewController {
     
     var viewModel: PhotosCollectionViewModelProtocol!
     
-    private var searchBarIsEmpty: Bool {
-        guard let text = searchController.searchBar.text else { return false }
-        return text.isEmpty
-    }
-    
     private let searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.obscuresBackgroundDuringPresentation = false

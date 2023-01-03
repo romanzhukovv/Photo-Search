@@ -7,7 +7,14 @@
 
 import RealmSwift
 
-class StorageManager {
+protocol StorageManagerProtocol {
+    func savePhoto(photo: Photo)
+    func deletePhoto(photo: Photo)
+    func checkFavorite(photo: Photo) -> Bool
+}
+
+final class StorageManager: StorageManagerProtocol {
+    
     static let shared = StorageManager()
     
     let realm = try! Realm()
