@@ -8,14 +8,14 @@
 import Foundation
 
 protocol FavoriteListViewModelProtocol {
-    func cellViewModel(at indexPath: IndexPath) -> FavoriteCellViewModelProtocol
+    func cellViewModel(at indexPath: IndexPath) -> FavoritePhotoCellViewModelProtocol
     func numberOfRows() -> Int
 }
 
 final class FavoriteListViewModel: FavoriteListViewModelProtocol {
-    func cellViewModel(at indexPath: IndexPath) -> FavoriteCellViewModelProtocol {
+    func cellViewModel(at indexPath: IndexPath) -> FavoritePhotoCellViewModelProtocol {
         let favoritePhoto = StorageManager.shared.favoritePhotos[indexPath.row]
-        return FavoriteCellViewModel(favoritePhoto: favoritePhoto)
+        return FavoritePhotoCellViewModel(favoritePhoto: favoritePhoto)
     }
     
     func numberOfRows() -> Int {

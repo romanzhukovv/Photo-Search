@@ -6,17 +6,15 @@
 //
 
 import UIKit
-import Kingfisher
 
-class FavoriteListViewController: UITableViewController {
+final class FavoriteListViewController: UITableViewController {
 
     var viewModel: FavoriteListViewModelProtocol!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(FavoritePhotoViewCell.self, forCellReuseIdentifier: FavoritePhotoViewCell.reuseId)
-        tableView.backgroundColor = .white
-        tableView.rowHeight = 140
+        
+        setupTableView()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -41,5 +39,13 @@ class FavoriteListViewController: UITableViewController {
 //        let detailVC = PhotoDetailViewController(photo: photo)
 //        detailVC.hidesBottomBarWhenPushed = true
 //        navigationController?.pushViewController(detailVC, animated: true)
+    }
+}
+
+extension FavoriteListViewController {
+    private func setupTableView() {
+        tableView.register(FavoritePhotoViewCell.self, forCellReuseIdentifier: FavoritePhotoViewCell.reuseId)
+        tableView.backgroundColor = .white
+        tableView.rowHeight = 140
     }
 }

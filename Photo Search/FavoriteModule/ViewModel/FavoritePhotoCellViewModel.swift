@@ -7,13 +7,13 @@
 
 import Foundation
 
-protocol FavoriteCellViewModelProtocol {
+protocol FavoritePhotoCellViewModelProtocol {
     var authorName: String { get }
     init(favoritePhoto: Photo)
     func getPhotoURL() -> URL
 }
 
-final class FavoriteCellViewModel: FavoriteCellViewModelProtocol {
+final class FavoritePhotoCellViewModel: FavoritePhotoCellViewModelProtocol {
     
     var authorName: String {
         favoritePhoto.user?.name ?? "No author name"

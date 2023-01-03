@@ -7,9 +7,10 @@
 
 import UIKit
 
-class PhotosCollectionViewController: UICollectionViewController {
-    private var photos: [Photo] = []
-    private var searchedPhotos: SearchedPhotos?
+final class PhotosCollectionViewController: UICollectionViewController {
+    
+    var viewModel: PhotosCollectionViewModelProtocol!
+    
     private var searchBarIsEmpty: Bool {
         guard let text = searchController.searchBar.text else { return false }
         return text.isEmpty
@@ -23,50 +24,39 @@ class PhotosCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.backgroundColor = .white
-        collectionView!.register(PhotoViewCell.self, forCellWithReuseIdentifier: PhotoViewCell.reuseId)
-        fetchPhotosData()
+        
+        setupCollectionView()
+        viewModel.getPhotos()
+        collectionView.reloadData()
         setupSearchController()
     }
 
     // MARK: UICollectionViewDataSource
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if isSearching {
-            return searchedPhotos?.results.count ?? 0
-        }
-        return photos.count
+        viewModel.numberOfPhotos()
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoViewCell.reuseId, for: indexPath) as! PhotoViewCell
-        let photo: Photo
-        
-        if isSearching {
-            guard let searchedPhoto = searchedPhotos?.results[indexPath.row] else { return cell }
-            photo = searchedPhoto
-        } else {
-            photo = photos[indexPath.row]
-        }
-        
-        cell.configureCell(photo: photo)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoViewCell.reuseId, for: indexPath) as? PhotoViewCell else { return UICollectionViewCell() }
+        cell.viewModel = viewModel.cellViewModel(at: indexPath)
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let photo: Photo
-        
-        if self.isSearching {
-            guard let searchedPhoto = searchedPhotos?.results[indexPath.row] else { return }
-            photo = searchedPhoto
-        } else {
-            photo = photos[indexPath.row]
-        }
-        
-        let detailVC = PhotoDetailViewController(photo: photo)
-        
-        detailVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(detailVC, animated: true)
+//        let photo: Photo
+//
+//        if self.isSearching {
+//            guard let searchedPhoto = searchedPhotos?.results[indexPath.row] else { return }
+//            photo = searchedPhoto
+//        } else {
+//            photo = photos[indexPath.row]
+//        }
+//        
+//        let detailVC = PhotoDetailViewController(photo: photo)
+//
+//        detailVC.hidesBottomBarWhenPushed = true
+//        navigationController?.pushViewController(detailVC, animated: true)
     }
 }
 
@@ -93,42 +83,24 @@ extension PhotosCollectionViewController: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchPhotosData(query: searchController.searchBar.text ?? "")
+        viewModel.searchPhotos(query: searchController.searchBar.text ?? "")
+        collectionView.reloadData()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        if !searchBarIsEmpty && searchedPhotos != nil {
+        if !searchBarIsEmpty && viewModel.searchedPhotos != nil {
             collectionView.reloadData()
-            searchedPhotos = nil
-        } else if searchBarIsEmpty && searchedPhotos != nil {
+            viewModel.searchedPhotos = nil
+        } else if searchBarIsEmpty && viewModel.searchedPhotos != nil {
             collectionView.reloadData()
-            searchedPhotos = nil
+            viewModel.searchedPhotos = nil
         }
     }
 }
 
 extension PhotosCollectionViewController {
-    private func fetchPhotosData() {
-        NetworkManager.shared.fetchData { result in
-            switch result {
-            case .success(let data):
-                self.photos = data
-                self.collectionView.reloadData()
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
-    
-    private func searchPhotosData(query: String) {
-        NetworkManager.shared.searchPhotos(query: query) { result in
-            switch result {
-            case .success(let data):
-                self.searchedPhotos = data
-                self.collectionView.reloadData()
-            case .failure(let error):
-                print(error)
-            }
-        }
+    private func setupCollectionView() {
+        collectionView.backgroundColor = .white
+        collectionView!.register(PhotoViewCell.self, forCellWithReuseIdentifier: PhotoViewCell.reuseId)
     }
 }

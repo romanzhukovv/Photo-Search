@@ -7,9 +7,9 @@
 
 import UIKit
 
-class FavoritePhotoViewCell: UITableViewCell {
+final class FavoritePhotoViewCell: UITableViewCell {
     
-    var viewModel: FavoriteCellViewModelProtocol!
+    var viewModel: FavoritePhotoCellViewModelProtocol!
     
     static let reuseId = "FavoritePhotoCell"
 
